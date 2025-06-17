@@ -3,7 +3,7 @@ dotenv.config();
 const mongoose = require("mongoose");
 const Movie = require("./models/movie.js");
 const Genre = require("./models/genre.js");
-const genre = require("./models/genre.js");
+const Director = require("./models/director.js");
 
 const connect = async () => {
   try {
@@ -36,19 +36,41 @@ const createGenre = async () => {
 };
 
 // TODO: Implement this function to create a new movie and link it to a genre
-const createMovie = async () => {
+// const createMovie = async () => {
+//   try {
+//     const movieData = {
+//         title: 'The Dark Knight',
+//         releaseYear: 2008,
+//         director:,
+//         genre: '6851b3992286a0636692dace'
+//     }
+//     const newMovie = await Movie.create(movieData);
+//     await Genre.findByIdAndUpdate(
+//         movieData.genre,
+//         { $push: {movies: newMovie._id} },
+//         { new: true },
+//     );
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// TODO: Implement this function to create a new director and link it to a movie
+
+const createDirector = async () => {
   try {
-    const movieData = {
-        title: 'The Dark Knight',
-        releaseYear: 2008,
-        genre: '6851b3992286a0636692dace'
+    const directorData = {
+        name: 'Christopher Nolan',
+        birthYear: 1970,
+        movies: '6851b69f1407bf3495740bb0'
     }
-    const newMovie = await Movie.create(movieData);
-    await Genre.findByIdAndUpdate(
-        movieData.genre,
-        { $push: {movies: newMovie._id} },
+    const newDirector = await Director.create(directorData);
+        await Movie.findByIdAndUpdate(
+        directorData.movies,
+        { $push: {movies: '6851b69f1407bf3495740bb0'} },
         { new: true },
     );
+    console.log(newDirector)
   } catch (error) {
     console.log(error);
   }
@@ -63,8 +85,17 @@ const findMovies = async () => {
 } catch (error) {
     console.log(error);
   }
+};
 
-
+// TODO: Implement this function to find all movies by Director
+const findMoviesByDirector = async () => {
+  try {
+    const directorId = "6851c0dce5265711ff601f04"
+    const findMovie = await Director.find({director: directorId });
+    console.log(findMovie);  
+} catch (error) {
+    console.log(error);
+  }
 };
 
 // TODO: Implement this function to find a genre and populate its movies
@@ -83,9 +114,11 @@ const findMoviesByGenre = async () => {
 const runQueries = async () => {
   console.log("Queries running.");
 
-  // Uncomment these one at a time to test your implementations
-  // await createGenre();
+// Uncomment these one at a time to test your implementations
+// await createGenre();
+  await createDirector();
 //    await createMovie();
 //    await findMovies();
 //   await findMoviesByGenre();
+    // await findMoviesByDirector()
 };
